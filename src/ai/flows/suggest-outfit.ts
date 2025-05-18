@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview AI-powered outfit suggestions based on uploaded clothing items.
@@ -5,6 +6,7 @@
  * - suggestOutfit - A function that suggests outfit combinations.
  * - SuggestOutfitInput - The input type for the suggestOutfit function.
  * - SuggestOutfitOutput - The return type for the suggestOutfit function.
+ * - SuggestedItem - The type for an individual item within a suggested outfit.
  */
 
 import {ai} from '@/ai/genkit';
@@ -20,9 +22,15 @@ const SuggestOutfitInputSchema = z.object({
 });
 export type SuggestOutfitInput = z.infer<typeof SuggestOutfitInputSchema>;
 
+const SuggestedItemSchema = z.object({
+  name: z.string().describe('The name or description of the clothing item in the outfit.'),
+  inputIndex: z.number().describe('The 0-based index of this item from the input clothingItemDataUris array, corresponding to the item used from the input list.')
+});
+export type SuggestedItem = z.infer<typeof SuggestedItemSchema>;
+
 const SuggestedOutfitSchema = z.object({
   description: z.string().describe('A description of the suggested outfit.'),
-  items: z.array(z.string()).describe('The items included in the outfit.'),
+  items: z.array(SuggestedItemSchema).describe('The items included in the outfit, with their names and original input index.'),
 });
 
 const SuggestOutfitOutputSchema = z.object({
@@ -42,8 +50,9 @@ const prompt = ai.definePrompt({
 
 You are creative and follow fashion rules and color theory to suggest stylish looks.
 
-Suggest outfits using the following clothing items:
+Suggest outfits using the following clothing items. For each item in your suggested outfits, you MUST provide the 'inputIndex' which corresponds to the 0-based index of the item from the 'clothingItemDataUris' array you were given.
 
+Input Clothing Items:
 {{#each clothingItemDataUris}}
 Item {{@index}}: {{media url=this}}
 {{/each}}

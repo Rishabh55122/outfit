@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, type ChangeEvent, useEffect } from 'react';
@@ -190,7 +191,7 @@ export default function OutfitGeneratorPage() {
       {isLoading && <LoadingSpinner text="Crafting your perfect outfits... Please wait." />}
       
       {!isLoading && suggestedOutfits && (
-        <OutfitDisplay suggestions={suggestedOutfits} />
+        <OutfitDisplay suggestions={suggestedOutfits} uploadedItemPreviews={itemPreviews} />
       )}
     </div>
   );

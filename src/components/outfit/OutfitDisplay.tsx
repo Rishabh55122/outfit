@@ -1,11 +1,13 @@
+
 import type { SuggestOutfitOutput } from '@/ai/flows/suggest-outfit';
 import OutfitCard from './OutfitCard';
 
 interface OutfitDisplayProps {
   suggestions: SuggestOutfitOutput | null;
+  uploadedItemPreviews: string[];
 }
 
-export default function OutfitDisplay({ suggestions }: OutfitDisplayProps) {
+export default function OutfitDisplay({ suggestions, uploadedItemPreviews }: OutfitDisplayProps) {
   if (!suggestions || suggestions.outfits.length === 0) {
     return (
       <div className="text-center py-10">
@@ -21,7 +23,7 @@ export default function OutfitDisplay({ suggestions }: OutfitDisplayProps) {
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {suggestions.outfits.map((outfit, index) => (
-          <OutfitCard key={index} outfit={outfit} />
+          <OutfitCard key={index} outfit={outfit} uploadedItemPreviews={uploadedItemPreviews} />
         ))}
       </div>
     </section>
