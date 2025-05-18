@@ -8,7 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
-import { UploadCloud, AlertCircle, Sparkles, Trash2 } from 'lucide-react';
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { UploadCloud, AlertCircle, Sparkles, Trash2, UserCheck } from 'lucide-react';
 
 import ItemPreview from '@/components/outfit/ItemPreview';
 import OutfitDisplay from '@/components/outfit/OutfitDisplay';
@@ -21,6 +22,7 @@ export default function OutfitGeneratorPage() {
   const [uploadedItemFiles, setUploadedItemFiles] = useState<File[]>([]);
   const [itemPreviews, setItemPreviews] = useState<string[]>([]);
   const [occasion, setOccasion] = useState<string>('');
+  const [gender, setGender] = useState<string>(''); // New state for gender
   const [suggestedOutfits, setSuggestedOutfits] = useState<SuggestOutfitOutput | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -66,6 +68,11 @@ export default function OutfitGeneratorPage() {
       toast({ title: "No items uploaded", description: "Upload an item to get suggestions.", variant: "destructive" });
       return;
     }
+    if (!gender) {
+      setError('Please select a gender preference.');
+      toast({ title: "Gender not selected", description: "Please select a gender for tailored suggestions.", variant: "destructive"});
+      return;
+    }
     setError(null);
     setIsLoading(true);
     setSuggestedOutfits(null);
@@ -74,11 +81,12 @@ export default function OutfitGeneratorPage() {
       const input: SuggestOutfitInput = {
         clothingItemDataUris: itemPreviews,
         occasion: occasion || undefined,
+        gender: gender || undefined, // Pass gender to the AI flow
       };
       const result = await suggestOutfit(input);
       setSuggestedOutfits(result);
       if (!result.outfits || result.outfits.length === 0) {
-        toast({ title: "No specific outfits found", description: "Try different items or occasions." });
+        toast({ title: "No specific outfits found", description: "Try different items, occasions, or gender selections." });
       } else {
         toast({ title: "Outfits Suggested!", description: "Check out your new looks below."});
       }
@@ -143,7 +151,30 @@ export default function OutfitGeneratorPage() {
                 </div>
               </div>
             )}
-             
+            
+            <div>
+              <Label className="block text-sm font-medium text-foreground mb-2">Suggest Outfits For:</Label>
+              <RadioGroup
+                value={gender}
+                onValueChange={setGender}
+                className="flex space-x-4"
+                disabled={isLoading}
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="female" id="female" />
+                  <Label htmlFor="female">Female</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="male" id="male" />
+                  <Label htmlFor="male">Male</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="neutral" id="neutral" />
+                  <Label htmlFor="neutral">Neutral / Any</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
             <div>
               <Label htmlFor="occasion" className="block text-sm font-medium text-foreground mb-1">What's the Occasion? (Optional)</Label>
               <Input
@@ -157,7 +188,7 @@ export default function OutfitGeneratorPage() {
               />
             </div>
 
-            <Button onClick={handleSubmit} disabled={isLoading || itemPreviews.length === 0} className="w-full text-base py-3">
+            <Button onClick={handleSubmit} disabled={isLoading || itemPreviews.length === 0 || !gender} className="w-full text-base py-3">
               {isLoading ? 'Styling Your Look...' : 'Get Outfit Suggestions'}
               {!isLoading && <Sparkles className="ml-2 h-5 w-5" />}
             </Button>
@@ -175,10 +206,10 @@ export default function OutfitGeneratorPage() {
            {!isLoading && !suggestedOutfits && !error && (
              <Card className="bg-accent/30 border-accent shadow-md">
                 <CardContent className="pt-6 text-center">
-                  <Sparkles className="mx-auto h-12 w-12 text-accent mb-3" />
-                  <h3 className="text-xl font-semibold text-accent-foreground">Ready for a Style Upgrade?</h3>
+                  <UserCheck className="mx-auto h-12 w-12 text-accent mb-3" />
+                  <h3 className="text-xl font-semibold text-accent-foreground">Personalize Your Style</h3>
                   <p className="text-muted-foreground mt-2">
-                    Upload your favorite clothing pieces, tell us the vibe, and let our AI stylist work its magic!
+                    Select a gender preference, upload your items, mention an occasion, and let our AI stylist create amazing looks for you!
                   </p>
                 </CardContent>
               </Card>
