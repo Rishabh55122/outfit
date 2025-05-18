@@ -168,7 +168,11 @@ export default function OutfitGeneratorPage() {
                   className="flex flex-col sm:flex-row sm:space-x-4 space-y-2 sm:space-y-0"
                   disabled={isLoading}
                 >
-                  {(['female', 'Female Style'], ['male', 'Male Style'], ['neutral', 'Neutral / Any Style']).map(([value, label]) => (
+                  {[
+                    ['female', 'Female Style'], 
+                    ['male', 'Male Style'], 
+                    ['neutral', 'Neutral / Any Style']
+                  ].map(([value, label]) => (
                     <div key={value} className="flex items-center space-x-2 p-2 rounded-md hover:bg-muted/50 transition-colors">
                       <RadioGroupItem value={value} id={value} />
                       <Label htmlFor={value} className="font-normal cursor-pointer">{label}</Label>
