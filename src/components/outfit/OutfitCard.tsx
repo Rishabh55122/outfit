@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Heart, Share2, Loader2 } from 'lucide-react'; // Added Loader2
+import { Heart, Share2, Loader2, ExternalLink } from 'lucide-react'; // Added Loader2 and ExternalLink
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import type { SuggestedItem } from '@/ai/flows/suggest-outfit';
@@ -115,6 +115,13 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
     });
   };
 
+  const handlePinterestSearch = () => {
+    const queryItems = outfit.items.map(item => item.name).join(' ');
+    const searchQuery = `${queryItems} outfit street style`;
+    const pinterestUrl = `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(searchQuery)}`;
+    window.open(pinterestUrl, '_blank');
+  };
+
   return (
     <Card className="overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
       <CardHeader>
@@ -150,12 +157,16 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
           })}
         </div>
       </CardContent>
-      <CardFooter className="flex justify-end space-x-2 bg-muted/50 p-3 mt-auto">
+      <CardFooter className="flex justify-end space-x-1 sm:space-x-2 bg-muted/50 p-3 mt-auto">
         <Button variant="ghost" size="icon" onClick={handleSave} aria-label="Save outfit">
           <Heart className={cn("h-5 w-5", isSaved ? "fill-destructive text-destructive" : "text-muted-foreground")} />
         </Button>
         <Button variant="ghost" size="icon" onClick={handleShare} aria-label="Share outfit" disabled={!currentUrl}>
           <Share2 className="h-5 w-5 text-muted-foreground" />
+        </Button>
+        <Button variant="outline" size="sm" onClick={handlePinterestSearch} aria-label="See on Pinterest" className="px-2 sm:px-3">
+          <ExternalLink className="h-4 w-4 sm:mr-1.5" />
+          <span className="hidden sm:inline">Pinterest</span>
         </Button>
       </CardFooter>
     </Card>
