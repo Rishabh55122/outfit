@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+// import { Badge } from '@/components/ui/badge'; // Removed Badge import
 import { Heart, Share2, Loader2, ExternalLink, ImageOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -174,12 +174,7 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
                   )}
                 </div>
                 <div className="w-full">
-                   {!isUploadedItem && !imageState.isLoading && (
-                     <Badge variant="secondary" className="absolute top-1 right-1 text-xs px-1.5 py-0.5 opacity-80 group-hover:opacity-100">AI Generated</Badge>
-                   )}
-                   {isUploadedItem && (
-                      <Badge variant="outline" className="absolute top-1 left-1 text-xs px-1.5 py-0.5 opacity-80 group-hover:opacity-100">Your Item</Badge>
-                   )}
+                   {/* Removed "AI Generated" and "Your Item" badges */}
                   <p className="text-xs sm:text-sm font-medium text-foreground line-clamp-2 leading-tight">{altText}</p>
                 </div>
               </div>
@@ -202,3 +197,4 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
     </Card>
   );
 }
+
