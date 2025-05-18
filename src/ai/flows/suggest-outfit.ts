@@ -24,13 +24,13 @@ export type SuggestOutfitInput = z.infer<typeof SuggestOutfitInputSchema>;
 
 const SuggestedItemSchema = z.object({
   name: z.string().describe('The name or description of the clothing item in the outfit.'),
-  inputIndex: z.number().describe('The 0-based index of this item from the input clothingItemDataUris array, corresponding to the item used from the input list.')
+  inputIndex: z.number().optional().describe('The 0-based index if this item is from the input clothingItemDataUris array. Omit this field if this is a new, generic item suggestion not present in the uploaded items.')
 });
 export type SuggestedItem = z.infer<typeof SuggestedItemSchema>;
 
 const SuggestedOutfitSchema = z.object({
   description: z.string().describe('A description of the suggested outfit.'),
-  items: z.array(SuggestedItemSchema).describe('The items included in the outfit, with their names and original input index.'),
+  items: z.array(SuggestedItemSchema).describe('The items included in the outfit, with their names and original input index if applicable.'),
 });
 
 const SuggestOutfitOutputSchema = z.object({
@@ -46,11 +46,18 @@ const prompt = ai.definePrompt({
   name: 'suggestOutfitPrompt',
   input: {schema: SuggestOutfitInputSchema},
   output: {schema: SuggestOutfitOutputSchema},
-  prompt: `You are a personal stylist that suggests outfits to users based on their wardrobe.
+  prompt: `You are a personal stylist that suggests outfits to users.
+You will be given a list of clothing items the user has uploaded.
+Your task is to suggest 1 to 3 outfits. An outfit can be:
+1. A combination of items from the user's uploaded list.
+2. A combination of items from the user's uploaded list AND new, generic complementary items (e.g., "a pair of dark wash jeans", "white sneakers", "a black belt").
 
-You are creative and follow fashion rules and color theory to suggest stylish looks.
+For each item in your suggested outfits:
+- Provide a descriptive 'name' for every item (e.g., "Uploaded Red Blouse", "Classic Blue Jeans", "White Low-Top Sneakers").
+- If the item is directly from the user's uploaded list, you MUST provide the 'inputIndex' which corresponds to its 0-based index in the 'clothingItemDataUris' array.
+- If the item is a new, generic complementary suggestion (not from the uploaded list), you MUST OMIT the 'inputIndex' field for that item.
 
-Suggest outfits using the following clothing items. For each item in your suggested outfits, you MUST provide the 'inputIndex' which corresponds to the 0-based index of the item from the 'clothingItemDataUris' array you were given.
+Be creative and follow fashion rules and color theory to suggest stylish looks.
 
 Input Clothing Items:
 {{#each clothingItemDataUris}}
@@ -74,3 +81,4 @@ const suggestOutfitFlow = ai.defineFlow(
     return output!;
   }
 );
+
