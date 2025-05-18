@@ -1,5 +1,5 @@
-# Firebase Studio
-
-This is a NextJS starter in Firebase Studio.
-
-To get started, take a look at src/app/page.tsx.
+<<<<<<< HEAD
+Your local changes here
+=======
+Remote changes here
+>>>>>>> commit-hash
