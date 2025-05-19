@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'OutfitAI - Your Personal Stylist',
+  title: 'StyleSniff - Your Personal AI Stylist',
   description: 'Get AI-powered outfit suggestions based on your wardrobe items.',
 };
 
