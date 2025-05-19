@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 
 const inspirationalImages = [
-  { src: 'https://placehold.co/300x500.png', alt: 'Stylish woman in outfit', dataAiHint: 'female fashion' },
-  { src: 'https://placehold.co/300x500.png', alt: 'Chic outfit on a girl', dataAiHint: 'woman style' },
-  { src: 'https://placehold.co/300x500.png', alt: 'Man wearing a stylish outfit', dataAiHint: 'male fashion' },
-  { src: 'https://placehold.co/300x500.png', alt: 'Woman in trendy streetwear', dataAiHint: 'streetwear female' },
-  { src: 'https://placehold.co/300x500.png', alt: 'Cool outfit on a boy', dataAiHint: 'men style' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Woman in beige blazer and trousers', dataAiHint: 'woman blazer' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Woman in light blazer and denim shorts', dataAiHint: 'woman denim shorts' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Woman in oversized beige blazer and sunglasses', dataAiHint: 'woman oversized blazer' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Woman in beige blazer, white top, and denim shorts', dataAiHint: 'woman fashion' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Woman in black blazer and light wash jeans', dataAiHint: 'woman street style' },
 ];
 
 export default function LandingPage() {
