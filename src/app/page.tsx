@@ -33,10 +33,11 @@ export default function LandingPage() {
             <Image
               src={image.src}
               alt={image.alt}
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: 'cover' }}
               className="transition-transform duration-300 group-hover:scale-110"
               data-ai-hint={image.dataAiHint}
+              sizes="(max-width: 640px) 18vw, (max-width: 768px) 19vw, 18vw"
             />
             {index === 0 && (
               <button
@@ -80,4 +81,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
