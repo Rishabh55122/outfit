@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 
 const inspirationalImages = [
-  { src: 'https://placehold.co/300x500.png', alt: 'Stylish outfit 1', dataAiHint: 'street style' },
-  { src: 'https://placehold.co/300x500.png', alt: 'Stylish outfit 2', dataAiHint: 'casual chic' },
-  { src: 'https://placehold.co/300x500.png', alt: 'Stylish outfit 3', dataAiHint: 'blazer look' },
-  { src: 'https://placehold.co/300x500.png', alt: 'Stylish outfit 4', dataAiHint: 'summer fashion' },
-  { src: 'https://placehold.co/300x500.png', alt: 'Stylish outfit 5', dataAiHint: 'denim style' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Stylish woman in outfit', dataAiHint: 'female fashion' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Chic outfit on a girl', dataAiHint: 'woman style' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Man wearing a stylish outfit', dataAiHint: 'male fashion' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Woman in trendy streetwear', dataAiHint: 'streetwear female' },
+  { src: 'https://placehold.co/300x500.png', alt: 'Cool outfit on a boy', dataAiHint: 'men style' },
 ];
 
 export default function LandingPage() {
@@ -80,3 +80,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
