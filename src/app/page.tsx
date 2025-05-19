@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 
 const inspirationalImages = [
-  { src: 'https://placehold.co/300x500.png', alt: 'Woman in white shirt and blue jeans walking in a city', dataAiHint: 'woman street style' },
+  { src: '/images/placeholder-1.jpeg', alt: 'Woman in white shirt and blue jeans walking in a city', dataAiHint: 'woman street style' },
   { src: 'https://placehold.co/300x500.png', alt: 'Woman in light blazer and denim shorts', dataAiHint: 'woman denim shorts' },
   { src: 'https://placehold.co/300x500.png', alt: 'Woman in oversized beige blazer and sunglasses', dataAiHint: 'woman oversized blazer' },
   { src: 'https://placehold.co/300x500.png', alt: 'Woman in beige blazer, white top, and denim shorts', dataAiHint: 'woman fashion' },
