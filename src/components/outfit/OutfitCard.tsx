@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-// import { Badge } from '@/components/ui/badge'; // Removed Badge import
 import { Heart, Share2, Loader2, ExternalLink, ImageOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -26,8 +25,7 @@ function getItemKeywords(itemName: string): string {
   if (words.length === 0) return "clothing";
   if (words.length === 1) return words[0];
   
-  // Prefer adjectives or nouns if identifiable, otherwise last two significant words
-  const adjectives = ["black", "white", "red", "blue", "green", "denim", "leather", "cotton", "slim", "graphic", "vintage"]; // Simple list
+  const adjectives = ["black", "white", "red", "blue", "green", "denim", "leather", "cotton", "slim", "graphic", "vintage"]; 
   const nouns = ["shirt", "jeans", "sneakers", "dress", "jacket", "boots", "heels", "tee", "blouse", "skirt", "shorts", "sweater", "cardigan", "coat"];
 
   const significantWords = words.filter(w => adjectives.includes(w) || nouns.includes(w) || w.length > 3);
@@ -38,7 +36,6 @@ function getItemKeywords(itemName: string): string {
   if (significantWords.length === 1) {
     return significantWords[0];
   }
-  // Fallback to last two words if no significant words found
   return `${words[words.length - 2] || ''} ${words[words.length - 1]}`.trim().slice(0, 20);
 }
 
@@ -61,28 +58,27 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
       src: (item.inputIndex !== undefined && item.inputIndex >= 0 && item.inputIndex < uploadedItemPreviews.length)
            ? uploadedItemPreviews[item.inputIndex]
            : null,
-      isLoading: item.inputIndex === undefined,
+      isLoading: item.inputIndex === undefined, // Only true if it's an AI generated item that needs fetching
       hasError: false,
     }));
     setItemImageStates(initialStates);
 
     outfit.items.forEach(async (item, index) => {
-      if (item.inputIndex === undefined) {
+      if (item.inputIndex === undefined) { // If it's a new AI suggested item
         try {
           const result = await generateItemImage({ itemDescription: item.name });
           setItemImageStates(prevStates => {
             const newStates = [...prevStates];
-            if (newStates[index]) {
+            if (newStates[index]) { // Ensure the index is valid
               newStates[index] = { src: result.imageDataUri, isLoading: false, hasError: false };
             }
             return newStates;
           });
         } catch (error) {
           console.error(`Failed to generate image for '${item.name}':`, error);
-          // No toast here to avoid spamming, error shown via placeholder
           setItemImageStates(prevStates => {
             const newStates = [...prevStates];
-             if (newStates[index]) {
+             if (newStates[index]) { // Ensure the index is valid
                 newStates[index] = { src: null, isLoading: false, hasError: true };
              }
             return newStates;
@@ -91,12 +87,12 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
       }
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [outfit.items, uploadedItemPreviews]);
+  }, [outfit.items, uploadedItemPreviews]); // Dependencies ensure this runs when outfit or previews change
 
   const handleShare = async () => {
     const shareData = {
-      title: 'OutfitAI Suggestion',
-      text: `Check out this outfit: ${outfit.description}\nItems: ${outfit.items.map(item => item.name).join(', ')}`,
+      title: 'StyleSniff Suggestion', // Updated name
+      text: `Check out this outfit from StyleSniff: ${outfit.description}\nItems: ${outfit.items.map(item => item.name).join(', ')}`,
       url: currentUrl,
     };
     try {
@@ -121,7 +117,7 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
   };
 
   const handlePinterestSearch = () => {
-    const queryItems = outfit.items.map(item => item.name.replace("Uploaded ", "")).join(' '); // Remove "Uploaded" prefix for better search
+    const queryItems = outfit.items.map(item => item.name.replace("Uploaded ", "")).join(' '); 
     const searchQuery = `${queryItems} outfit street style`;
     const pinterestUrl = `https://www.pinterest.com/search/pins/?q=${encodeURIComponent(searchQuery)}`;
     window.open(pinterestUrl, '_blank');
@@ -139,34 +135,38 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
             const altText = item.name || `Outfit item ${index + 1}`;
             const isUploadedItem = item.inputIndex !== undefined;
             const dataAiHint = isUploadedItem ? "clothing item" : getItemKeywords(item.name);
-            const placeholderUrl = `https://placehold.co/150x150.png?text=${encodeURIComponent(item.name.split(' ').slice(0,2).join(' '))}`;
+            // Using a generic placeholder initially, or if generation fails.
+            const placeholderUrl = `https://placehold.co/150x180.png?text=${encodeURIComponent(item.name.split(' ').slice(0,2).join(' '))}`;
 
 
             return (
-              <div key={`${item.name}-${index}-${index}`} className="group relative border border-border p-2 rounded-lg bg-background/60 flex flex-col items-center text-center shadow-sm aspect-[4/5] justify-between hover:shadow-md transition-shadow">
+              <div key={`${item.name}-${index}`} className="group relative border border-border p-2 rounded-lg bg-background/60 flex flex-col items-center text-center shadow-sm aspect-[4/5] justify-between hover:shadow-md transition-shadow">
                 <div className="w-full h-3/5 mb-2 flex items-center justify-center overflow-hidden rounded-md bg-muted/30">
                   {imageState.isLoading ? (
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                  ) : imageState.hasError ? (
+                  ) : imageState.hasError || !imageState.src ? ( // Added !imageState.src check
                      <div className="flex flex-col items-center justify-center text-muted-foreground">
                         <ImageOff className="h-8 w-8 mb-1" />
                         <span className="text-xs">No Image</span>
                       </div>
                   ) : (
                     <Image
-                      src={imageState.src || placeholderUrl}
+                      src={imageState.src} // Will be data URI or uploaded preview
                       alt={altText}
                       width={150}
-                      height={180} // Adjusted for aspect ratio
+                      height={180} 
                       className="object-contain w-full h-full group-hover:scale-105 transition-transform duration-300"
                       data-ai-hint={dataAiHint}
                       onError={(e) => {
-                        // Fallback if image source fails (e.g. invalid data URI from generation)
-                        e.currentTarget.src = placeholderUrl;
-                        e.currentTarget.onerror = null; // Prevent infinite loop
+                        e.currentTarget.src = placeholderUrl; // Fallback to generic placeholder
+                        e.currentTarget.onerror = null; 
                          setItemImageStates(prevStates => {
                            const newStates = [...prevStates];
-                           if (newStates[index]) newStates[index].hasError = true;
+                           if (newStates[index]) {
+                             newStates[index].src = placeholderUrl; // Set src to placeholder
+                             newStates[index].hasError = true;
+                             newStates[index].isLoading = false; // Ensure loading is false
+                           }
                            return newStates;
                          });
                       }}
@@ -174,7 +174,6 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
                   )}
                 </div>
                 <div className="w-full">
-                   {/* Removed "AI Generated" and "Your Item" badges */}
                   <p className="text-xs sm:text-sm font-medium text-foreground line-clamp-2 leading-tight">{altText}</p>
                 </div>
               </div>
@@ -197,4 +196,3 @@ export default function OutfitCard({ outfit, uploadedItemPreviews }: OutfitCardP
     </Card>
   );
 }
-
