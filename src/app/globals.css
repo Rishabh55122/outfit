@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,57 +9,59 @@ body {
 
 @layer base {
   :root {
-    --background: 340 27% 92%; /* Light Grayish-Pink #F0E6E8 */
-    --foreground: 0 0% 20%; /* Dark Gray/Charcoal for contrast */
+    /* Adjusted for a lighter, more modern aesthetic as per the target image */
+    --background: 0 0% 98%; /* Very light gray, almost white */
+    --foreground: 0 0% 13%; /* Dark gray for text */
 
-    --card: 340 25% 95%; /* Slightly lighter pink/off-white */
-    --card-foreground: 0 0% 20%;
+    --card: 0 0% 100%; /* White cards */
+    --card-foreground: 0 0% 13%;
 
-    --popover: 340 25% 95%;
-    --popover-foreground: 0 0% 20%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
 
-    --primary: 340 30% 65%; /* Dusty Rose #C28D9F */
-    --primary-foreground: 340 30% 97%; /* Light pink/white for contrast */
+    /* Primary can be used for accents if needed, but target is mostly monochrome with gradient accents */
+    --primary: 273 70% 60%; /* A vibrant purple as an accent example */
+    --primary-foreground: 0 0% 98%; 
 
-    --secondary: 273 18% 75%; /* Lighter Muted Purple for secondary elements */
-    --secondary-foreground: 273 20% 25%; /* Darker Purple for contrast */
+    --secondary: 0 0% 93%; /* Lighter gray for secondary elements */
+    --secondary-foreground: 0 0% 20%;
 
-    --muted: 340 20% 88%; /* Muted pinkish gray */
+    --muted: 0 0% 85%; 
     --muted-foreground: 0 0% 45%;
 
-    --accent: 273 20% 60%; /* Muted Purple #9278A8 */
-    --accent-foreground: 273 20% 96%; /* Light color for contrast */
+    --accent: 340 70% 70%; /* A pinkish accent example */
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 340 20% 85%; /* Muted pinkish border */
-    --input: 340 20% 88%; /* Muted pinkish gray for input background */
-    --ring: 340 30% 65%; /* Primary color for ring */
+    --border: 0 0% 90%; /* Light border color */
+    --input: 0 0% 90%; 
+    --ring: 273 70% 60%; /* Ring color matches primary accent */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly larger radius for modern feel */
 
-    /* Chart colors */
+    /* Chart colors - can be kept or updated if charts are used later */
     --chart-1: 340 70% 70%;
     --chart-2: 273 60% 70%;
     --chart-3: 30 80% 70%;
     --chart-4: 190 70% 65%;
     --chart-5: 120 50% 60%;
 
-    /* Sidebar specific colors */
-    --sidebar-background: 0 0% 98%; /* Neutral light background */
-    --sidebar-foreground: 240 5.3% 26.1%; /* Dark text */
+    /* Sidebar specific colors (if sidebar is used on other pages) */
+    --sidebar-background: 0 0% 98%; 
+    --sidebar-foreground: 240 5.3% 26.1%; 
     --sidebar-primary: hsl(var(--primary));
     --sidebar-primary-foreground: hsl(var(--primary-foreground));
     --sidebar-accent: hsl(var(--accent));
     --sidebar-accent-foreground: hsl(var(--accent-foreground));
-    --sidebar-border: 220 13% 91%; /* Light neutral border */
+    --sidebar-border: 220 13% 91%; 
     --sidebar-ring: hsl(var(--ring));
   }
 
   .dark {
-    --background: 0 0% 10%; /* Dark Gray */
-    --foreground: 0 0% 95%; /* Light Gray/White */
+    --background: 0 0% 10%; 
+    --foreground: 0 0% 95%; 
 
     --card: 0 0% 15%;
     --card-foreground: 0 0% 95%;
@@ -66,24 +69,24 @@ body {
     --popover: 0 0% 15%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 340 30% 65%; /* Dusty Rose - keep vibrant */
-    --primary-foreground: 340 30% 15%; /* Darker for contrast on primary */
+    --primary: 273 70% 65%; /* Vibrant purple */
+    --primary-foreground: 0 0% 10%; 
 
-    --secondary: 273 20% 50%;
+    --secondary: 0 0% 20%;
     --secondary-foreground: 0 0% 95%;
 
     --muted: 0 0% 25%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 273 20% 60%; /* Muted Purple - keep vibrant */
-    --accent-foreground: 273 20% 15%; /* Darker for contrast */
+    --accent: 340 60% 65%; /* Pinkish accent */
+    --accent-foreground: 0 0% 10%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 30%;
     --input: 0 0% 25%;
-    --ring: 340 30% 65%;
+    --ring: 273 70% 65%;
 
     /* Chart colors for dark theme */
     --chart-1: 340 60% 60%;
@@ -93,13 +96,13 @@ body {
     --chart-5: 120 40% 50%;
     
     /* Sidebar specific colors for dark theme */
-    --sidebar-background: 240 5.9% 10%; /* Standard dark sidebar background */
-    --sidebar-foreground: 240 4.8% 95.9%; /* Light text for dark sidebar */
+    --sidebar-background: 240 5.9% 10%; 
+    --sidebar-foreground: 240 4.8% 95.9%; 
     --sidebar-primary: hsl(var(--primary));
     --sidebar-primary-foreground: hsl(var(--primary-foreground));
     --sidebar-accent: hsl(var(--accent));
     --sidebar-accent-foreground: hsl(var(--accent-foreground));
-    --sidebar-border: 240 3.7% 15.9%; /* Dark border */
+    --sidebar-border: 240 3.7% 15.9%; 
     --sidebar-ring: hsl(var(--ring));
   }
 }
@@ -110,9 +113,6 @@ body {
   }
   body {
     @apply bg-background text-foreground;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
   }
   main {
     flex-grow: 1;

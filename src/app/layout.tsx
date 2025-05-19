@@ -1,5 +1,6 @@
+
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google'; // Using Inter as per globals.css effective style
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/layout/Header';
@@ -11,8 +12,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'StyleSniff - Your Personal AI Stylist',
-  description: 'Get AI-powered outfit suggestions based on your wardrobe items.',
+  title: 'StyleSniff - Discover Your Style',
+  description: 'AI-powered fashion discovery to find similar items, complete looks, and recreate outfits.',
 };
 
 export default function RootLayout({
@@ -22,9 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased flex flex-col min-h-screen">
         <Header />
-        <main className="flex-grow container mx-auto px-4 py-8">
+        <main className="flex-grow">
           {children}
         </main>
         <Footer />

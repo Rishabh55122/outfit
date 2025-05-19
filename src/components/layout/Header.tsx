@@ -1,18 +1,27 @@
 
 import Link from 'next/link';
-import { Search } from 'lucide-react'; // Changed from Sparkles to Search
+import { Button } from '@/components/ui/button';
 
 export default function Header() {
   return (
-    <header className="bg-card border-b border-border shadow-sm sticky top-0 z-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 text-2xl font-bold text-primary hover:opacity-80 transition-opacity">
-          <Search className="h-8 w-8" /> {/* Changed icon */}
-          <span>StyleSniff</span>
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <Link href="/" className="text-3xl font-bold text-foreground hover:opacity-80 transition-opacity">
+          StyleSniff
         </Link>
-        <nav>
-          {/* Future navigation items can go here */}
+        <nav className="hidden md:flex items-center space-x-6 text-sm font-medium text-muted-foreground">
+          <Link href="#" className="hover:text-primary transition-colors">Explore</Link>
+          <Link href="#" className="hover:text-primary transition-colors">How It Works</Link>
+          <Link href="#" className="hover:text-primary transition-colors">Pricing</Link>
         </nav>
+        <div className="flex items-center space-x-3">
+          <Button variant="outline" className="rounded-full px-6 hidden sm:inline-flex border-foreground/20 hover:bg-foreground/5">
+            Upload Outfit
+          </Button>
+          <Button className="rounded-full px-6 bg-foreground text-background hover:bg-foreground/80">
+            Upload Outfit
+          </Button>
+        </div>
       </div>
     </header>
   );
