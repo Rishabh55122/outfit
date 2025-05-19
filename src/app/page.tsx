@@ -39,15 +39,6 @@ export default function LandingPage() {
               data-ai-hint={image.dataAiHint}
               sizes="(max-width: 640px) 18vw, (max-width: 768px) 19vw, 18vw"
             />
-            {index === 0 && (
-              <button
-                aria-label="Add new outfit"
-                className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20
-                           bg-black/70 text-white rounded-full p-2 hover:bg-black transition-colors"
-              >
-                <Plus size={20} />
-              </button>
-            )}
           </div>
         ))}
       </div>
