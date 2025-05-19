@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from '@/components/ui/textarea'; // Added for occasion
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { UploadCloud, AlertCircle, Sparkles, Trash2, Palette, CalendarDays, VenusAndMars, ServerCrash, ThumbsUp, Wand2 } from 'lucide-react';
+import { UploadCloud, AlertCircle, Sparkles, Trash2, Palette, CalendarDays, VenusAndMars, ServerCrash, ThumbsUp, Wand2, Loader2 } from 'lucide-react';
 
 import ItemPreview from '@/components/outfit/ItemPreview';
 import OutfitDisplay from '@/components/outfit/OutfitDisplay';
