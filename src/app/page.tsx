@@ -48,12 +48,6 @@ export default function LandingPage() {
                 <Plus size={20} />
               </button>
             )}
-             {index === inspirationalImages.length -1 && (
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 space-y-2 w-full px-2">
-                    <div className="bg-black/70 text-white text-xs sm:text-sm text-center py-1.5 px-3 rounded-full backdrop-blur-sm">Skirts</div>
-                    <div className="bg-yellow-400/80 text-black text-xs sm:text-sm text-center py-1.5 px-3 rounded-full backdrop-blur-sm">Combinations</div>
-                </div>
-            )}
           </div>
         ))}
       </div>
