@@ -2,6 +2,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link'; // Import Link
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 
@@ -59,9 +60,11 @@ export default function LandingPage() {
       {/* Central Upload Button */}
       <div className="relative z-20 mt-[-40px] sm:mt-[-60px]">
         <div className="p-1 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 hover:shadow-xl transition-shadow">
+          <Link href="/create-outfit" passHref>
             <Button size="lg" className="rounded-full text-lg sm:text-xl px-10 sm:px-16 py-6 sm:py-8 bg-black text-white hover:bg-gray-800 font-semibold">
             Upload outfit
             </Button>
+          </Link>
         </div>
       </div>
 
@@ -71,9 +74,7 @@ export default function LandingPage() {
           Discover your style
         </h1>
         <p className="mt-6 text-lg sm:text-xl text-muted-foreground max-w-xl sm:max-w-2xl mx-auto">
-          Pacessai vat he sloidç joor ore pesidks tiihe yihers giistan iav Aacieciers tor Inofis turtmed
-          fou fne oht einirke arelas tiore tir lurtisvoni tuvdioons leoie oækic, lor luhssla ltt tit tii. lische
-          thesri vioibo stitono soba tic oasotierv,
+          StyleSniff uses AI to help you discover new looks from your wardrobe. Upload your items, and let us inspire your next outfit! Perfect for finding trends or completing your style.
         </p>
       </div>
     </div>
