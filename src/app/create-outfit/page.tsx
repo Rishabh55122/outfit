@@ -79,7 +79,6 @@ export default function CreateOutfitPage() {
           description: `${newItems.length} item(s) successfully added to your selection.`,
         });
       }
-      // Reset file input to allow re-uploading the same file if removed
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -91,8 +90,6 @@ export default function CreateOutfitPage() {
     setUploadedItems(prev => prev.filter((_, i) => i !== index));
     setUploadedItemPreviews(prev => {
       const newPreviews = prev.filter((_, i) => i !== index);
-      // No need to revokeObjectURL here as ItemPreview might still be using it briefly
-      // URL.revokeObjectURL is best called when the component unmounts or src changes definitely
       return newPreviews;
     });
     toast({
@@ -102,7 +99,6 @@ export default function CreateOutfitPage() {
   };
 
   const handleClearAll = () => {
-    // Revoke URLs for previews that are about to be removed
     uploadedItemPreviews.forEach(preview => URL.revokeObjectURL(preview));
     setUploadedItems([]);
     setUploadedItemPreviews([]);
@@ -211,7 +207,13 @@ export default function CreateOutfitPage() {
                     accept="image/jpeg,image/png,image/webp,image/gif"
                     onChange={handleFileChange}
                     ref={fileInputRef}
-                    className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+                    className="w-full text-sm text-muted-foreground
+                               file:mr-3 file:py-2 file:px-4 
+                               file:rounded-md file:border-0
+                               file:text-sm file:font-semibold
+                               file:bg-primary file:text-primary-foreground
+                               hover:file:bg-primary/90
+                               cursor-pointer"
                     disabled={isLoading || uploadedItems.length >= MAX_FILES}
                   />
                    {uploadedItems.length >= MAX_FILES && (
@@ -239,7 +241,7 @@ export default function CreateOutfitPage() {
                 <Separator />
                 <div className="space-y-3">
                   <Label className="text-md font-semibold flex items-center gap-2"><VenusAndMars className="text-primary"/>Style Preference</Label>
-                  <RadioGroup value={gender} onValueChange={setGender} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                  <RadioGroup value={gender} onValueChange={setGender} className="flex flex-wrap gap-x-6 gap-y-3 items-center">
                     {genderOptions.map((option) => (
                       <div key={option.id} className="flex items-center space-x-2">
                         <RadioGroupItem value={option.id} id={`gender-${option.id}`} />
@@ -262,7 +264,7 @@ export default function CreateOutfitPage() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button type="submit" className="w-full text-base py-6" disabled={isLoading || uploadedItems.length === 0}>
+                <Button type="submit" size="lg" className="w-full" disabled={isLoading || uploadedItems.length === 0}>
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-5 w-5 animate-spin" /> Generating...
