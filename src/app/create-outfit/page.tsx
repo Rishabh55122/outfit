@@ -9,9 +9,9 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Textarea } from '@/components/ui/textarea'; // Added for occasion
+import { Textarea } from '@/components/ui/textarea';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { UploadCloud, AlertCircle, Sparkles, Trash2, Palette, CalendarDays, VenusAndMars, ServerCrash, ThumbsUp, Wand2, Loader2 } from 'lucide-react';
+import { UploadCloud, AlertCircle, Sparkles, Trash2, Palette, CalendarDays, VenusAndMars, Wand2, Loader2 } from 'lucide-react';
 
 import ItemPreview from '@/components/outfit/ItemPreview';
 import OutfitDisplay from '@/components/outfit/OutfitDisplay';
@@ -24,9 +24,9 @@ const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 
 const genderOptions = [
-  { id: "female", label: "Female Style", icon: VenusAndMars },
-  { id: "male", label: "Male Style", icon: VenusAndMars },
-  { id: "neutral", label: "Neutral / Any Style", icon: VenusAndMars },
+  { id: "female", label: "Female Style" },
+  { id: "male", label: "Male Style" },
+  { id: "neutral", label: "Neutral / Any Style" },
 ];
 
 
@@ -91,7 +91,8 @@ export default function CreateOutfitPage() {
     setUploadedItems(prev => prev.filter((_, i) => i !== index));
     setUploadedItemPreviews(prev => {
       const newPreviews = prev.filter((_, i) => i !== index);
-      newPreviews.forEach(preview => URL.revokeObjectURL(preview)); // Clean up old previews
+      // No need to revokeObjectURL here as ItemPreview might still be using it briefly
+      // URL.revokeObjectURL is best called when the component unmounts or src changes definitely
       return newPreviews;
     });
     toast({
@@ -101,6 +102,7 @@ export default function CreateOutfitPage() {
   };
 
   const handleClearAll = () => {
+    // Revoke URLs for previews that are about to be removed
     uploadedItemPreviews.forEach(preview => URL.revokeObjectURL(preview));
     setUploadedItems([]);
     setUploadedItemPreviews([]);
@@ -157,7 +159,7 @@ export default function CreateOutfitPage() {
         });
       } else {
         setError("StyleSniff couldn't generate outfits this time. Try different items or options!");
-        setSuggestions(null); // Ensure no old suggestions are shown
+        setSuggestions(null); 
       }
     } catch (e: any) {
       console.error('Error suggesting outfit:', e);
@@ -229,7 +231,7 @@ export default function CreateOutfitPage() {
                         />
                       ))}
                     </div>
-                    <Button variant="outline" size="sm" onClick={handleClearAll} className="w-full text-destructive hover:border-destructive/50">
+                    <Button variant="outline" size="sm" onClick={handleClearAll} className="w-full text-destructive hover:text-destructive hover:border-destructive/50">
                       <Trash2 className="mr-2 h-4 w-4" /> Clear All Items
                     </Button>
                   </div>
@@ -289,7 +291,7 @@ export default function CreateOutfitPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-destructive-foreground">{error}</p>
-                 <Button onClick={() => setError(null)} variant="outline" className="mt-4 border-destructive/70 text-destructive hover:bg-destructive/10">
+                 <Button onClick={() => setError(null)} variant="outline" className="mt-4 border-destructive/70 text-destructive hover:bg-destructive/10 hover:text-destructive">
                   Try Again or Adjust
                 </Button>
               </CardContent>
@@ -324,4 +326,3 @@ export default function CreateOutfitPage() {
     </div>
   );
 }
-
